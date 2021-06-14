@@ -1,0 +1,21 @@
+\chapter{Characteristics of SQL Queries in the Wild}
+\label{chapter:characteristics_sql_queries}
+
+This chapter describes the approach used for building a large dataset of SQL queries collected from StackOverflow posts. StackOverflow is the main website where developers can ask questions and discuss various computer programming related issues which makes it one of the largest knowledge bases in this field. Apart from collecting the queries, an analysis on the dataset as a whole is also presented, with the aim to better understand what types of SQL related questions are being asked by developers.
+
+\section{Research questions}
+
+\section{Data collection}
+
+The technique used in this thesis for extracting SQL queries from StackOverflow posts focused on retrieving the code block sections from each post and parsing these for finding valid SQL statements. For this, using an API for accessing the available StackOverflow data was preferred over other techniques such as web crawling since using an API is less intrusive for the StackOverflow platform. Google’s BigQuery public datasets now also include StackOverflow data, however these are not always up to date and further analysis showed these datasets are also not complete. In the end, for this paper, it was decided to use the Stack Exchange API which provides an interface for retrieving posts data from StackOverflow.
+
+The Stack Exchange API offers functionality for creating a custom filter which is then included in the request providing fine control over the returned data. In this case, all metadata associated with a post was collected since the goal was building a complete dataset which might later be used for other research as well. Furthermore, it is important to point out that a distinction should be made between a question post and an answer post. A question post can have multiple answers associated with it and should also have at most one accepted answer. All posts, questions and answers, are created by one user, and have a score associated with them which indicates the number of upvotes a question or an answer has received. The intuition behind the score value for questions is that the higher the number, the more developers found that particular question useful, whereas for answers the higher the score the better the answer.
+
+The collected data was organized in a MySQL database with 4 important schemas: owners, questions, answers and queries. In the owners table, the data about the user who created the post is stored together with any other metadata associated with the user. In the questions table, the data for the questions posts is stored and similarly in the answers table the data for all other posts is stored. Finally, in the queries table all extracted queries are saved together with an identifier which links the query to the post from which it was extracted. Since StackOverflow has no way of enforcing SQL syntax to be written in code block sections, this means that users are free to input any type of text inside the code blocks. Because of this, a special algorithm has to be used for extracting only the SQL statements from these sections.
+
+The algorithm used for extracting the queries from the code block section starts by first looking at every line and detecting whether it starts with a valid SQL keyword. If not, a number of additional checks are carried out in order to determine whether the line is part of an enumeration which was split on multiple rows. If this is still not the case, then the line is eliminated from the code block. After all lines from a code block section are parsed, all of them are collected into a single query. In case users input multiple SQL queries the algorithm also detects this by looking for the special semicolon character which indicates the end of an SQL statement. Finally, all extracted queries are saved in the MySQL database and can later be processed by other tools such as SQL parsers like JSQL for determining whether the syntax of the query is indeed valid.
+
+
+\section{Results}
+
+\section{Summary}
