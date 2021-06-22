@@ -4,6 +4,10 @@
 
 Static analysis rule based tool for detecting semantic bugs in SQL queries.
 
+### Interactive website
+
+You can check out our rule-based static analysis tool for detecting semantic bugs in SQL queries here: [https://sqlbugfinder.com/](https://sqlbugfinder.com/)
+
 ### Study on semantic bugs in SQL
 
 The report can be accessed at the following link: [https://repository.tudelft.nl/islandora/object/uuid%3A6260695a-a963-4414-9967-5cb66faf1ba8](https://repository.tudelft.nl/islandora/object/uuid%3A6260695a-a963-4414-9967-5cb66faf1ba8)
