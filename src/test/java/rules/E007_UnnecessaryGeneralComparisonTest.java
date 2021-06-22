@@ -84,4 +84,22 @@ public class E007_UnnecessaryGeneralComparisonTest {
         pm.parse(new StringReader(query)).accept(rule);
         assertEquals(results, rule.getResults());
     }
+
+    @Test
+    public void testQueryWithDifferentTableAliases() throws JSQLParserException {
+        query = "SELECT name FROM worldus AS w WHERE w.gdp >= (SELECT max(gdp) FROM world WHERE continent = 'Europe');";
+        results.clear();
+        pm.parse(new StringReader(query)).accept(rule);
+        assertEquals(results, rule.getResults());
+        query = "SELECT name FROM world AS w WHERE w.gdp >= (SELECT max(gdp) FROM world WHERE continent = 'Europe');";
+        results.clear();
+        results.add("w.gdp >= (SELECT max(gdp) FROM world WHERE continent = 'Europe')");
+        pm.parse(new StringReader(query)).accept(rule);
+        assertEquals(results, rule.getResults());
+        query = "SELECT name FROM world AS w WHERE w.gdp >= (SELECT max(z.gdp) FROM world z WHERE continent = 'Europe');";
+        results.clear();
+        results.add("w.gdp >= (SELECT max(z.gdp) FROM world z WHERE continent = 'Europe')");
+        pm.parse(new StringReader(query)).accept(rule);
+        assertEquals(results, rule.getResults());
+    }
 }

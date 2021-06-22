@@ -76,7 +76,9 @@ public abstract class QueryVisitor implements StatementVisitor, SelectVisitor, S
                 results.put(query.getQueryId(), getResults());
                 interfaceCleanup();
             } catch (Exception e) {
-                System.out.printf("[ERROR] rule: %s, query: %s\n", this.getClass().getName(), query.getQuery());
+                String errorMsg = String.format("[ERROR] rule: %s, query: %s\n", this.getClass().getName(), query.getQuery());
+                System.out.printf(errorMsg);
+                results.put(query.getQueryId(), new ArrayList<>(Collections.singleton(errorMsg)));
                 e.printStackTrace();
             }
         }

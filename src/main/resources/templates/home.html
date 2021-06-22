@@ -1,0 +1,41 @@
+<html>
+<head>
+    <title>Home Page</title>
+    <link href="webjars/bootstrap/4.6.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1 style="margin-top: 10px"><a class="custom-link" href="/">SQL Bug Finder</a></h1>
+
+        <form action="#" th:action="@{/detect}" th:object="${text}" method="post">
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group green-border-focus">
+                    <label for="main-input">Input queries below for detecting semantic bugs.</label>
+                    <textarea type="text" th:field="*{text}" class="form-control" id="main-input" rows="7" placeholder="e.g: SELECT feedback_id, comment FROM sales.feedbacks WHERE comment LIKE '30!%' ESCAPE '!';"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <input type="submit" class="btn btn-info" value="Detect bugs">
+            </div>
+        </div>
+
+        <br>
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group green-border-focus">
+                    <label for="main-output">Results are shown below.</label>
+                    <textarea class="form-control" id="main-output" rows="10" th:text="${results}" disabled></textarea>
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>
+    <script src="webjars/jquery/3.6.0/jquery.min.js"></script>
+    <script src="webjars/bootstrap/4.6.0/js/bootstrap.min.js"></script>
+</body>
+</html>
